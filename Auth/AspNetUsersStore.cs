@@ -22,6 +22,8 @@ namespace AngularWebApp.Auth
         , IUserPhoneNumberStore<AspNetUsers>
         , IUserAuthenticatorKeyStore<AspNetUsers>
         , IUserTwoFactorStore<AspNetUsers>
+        , IUserLoginStore<AspNetUsers>
+        , IUserLockoutStore<AspNetUsers>
     {
         private bool _disposed = false;
         private DataConnection db;
@@ -548,6 +550,85 @@ namespace AngularWebApp.Auth
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
             return Task.FromResult(user.TwoFactorEnabled);
+        }
+
+        public async Task AddLoginAsync(AspNetUsers user, UserLoginInfo login, CancellationToken cancellationToken)
+        {
+            await db.InsertAsync(new AspNetUserLogins()
+            {
+                LoginProvider = login.LoginProvider,
+                ProviderDisplayName = login.ProviderDisplayName,
+                ProviderKey = login.ProviderKey,
+                UserId = user.Id
+            });
+        }
+
+        public async Task<AspNetUsers> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            return await (
+                from u in db.GetTable<AspNetUsers>()
+                join ul in db.GetTable<AspNetUserLogins>()
+                on u.Id equals ul.UserId
+                where ul.LoginProvider == loginProvider
+                && ul.ProviderKey == providerKey
+                select u
+            ).FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<IList<UserLoginInfo>> GetLoginsAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            return await (
+                from u in db.GetTable<AspNetUsers>()
+                join ul in db.GetTable<AspNetUserLogins>()
+                on u.Id equals ul.UserId
+                where u.Id == user.Id
+                select new UserLoginInfo(ul.LoginProvider, ul.ProviderKey, ul.ProviderDisplayName)
+            ).ToListAsync(cancellationToken);
+        }
+
+        public async Task RemoveLoginAsync(AspNetUsers user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            await db.GetTable<AspNetUserLogins>().Where(ul => ul.LoginProvider == loginProvider && ul.ProviderKey == providerKey).DeleteAsync();
+        }
+
+        public Task<int> GetAccessFailedCountAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.AccessFailedCount);
+        }
+
+        public Task<bool> GetLockoutEnabledAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.LockoutEnabled);
+        }
+
+        public Task<DateTimeOffset?> GetLockoutEndDateAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.LockoutEnd);
+        }
+
+        public async Task<int> IncrementAccessFailedCountAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            user.AccessFailedCount++;
+            await db.UpdateAsync(user);
+            return user.AccessFailedCount;
+        }
+
+        public async Task ResetAccessFailedCountAsync(AspNetUsers user, CancellationToken cancellationToken)
+        {
+            user.AccessFailedCount = 0;
+            await db.UpdateAsync(user);
+        }
+
+        public async Task SetLockoutEnabledAsync(AspNetUsers user, bool enabled, CancellationToken cancellationToken)
+        {
+            user.LockoutEnabled = enabled;
+            await db.UpdateAsync(user);
+        }
+
+        public async Task SetLockoutEndDateAsync(AspNetUsers user, DateTimeOffset? lockoutEnd, CancellationToken cancellationToken)
+        {
+            user.LockoutEnd = lockoutEnd;
+            await db.UpdateAsync(user);
         }
     }
 
