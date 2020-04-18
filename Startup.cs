@@ -109,6 +109,9 @@ namespace AngularWebApp
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); // Use this instead to use the angular cli server
+                                                                                 // (then you must run "npm start" from the command line
+                                                                                 //  before running the API in visual studio).
                 }
             });
         }
