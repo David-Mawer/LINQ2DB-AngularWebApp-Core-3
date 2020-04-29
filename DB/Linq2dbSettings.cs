@@ -36,7 +36,7 @@ namespace AngularWebApp.DB
 
         public IEnumerable<IDataProviderSettings> DataProviders => Enumerable.Empty<IDataProviderSettings>();
 
-        public string DefaultConfiguration => "SqlServer";
+        public string DefaultConfiguration => mConnectionStringSettings.Name;
 
         public string DefaultDataProvider => "SqlServer";
 
