@@ -1,4 +1,4 @@
-# This is a .Net Core 3.1 (Angular 9 + API) Template for Linq2Db
+# This is a .Net Core 3.1 (Angular 10 + API) Template for Linq2Db
 
 This is the basic Angular WebApp template for **.Net Core 3.1** with a few tweaks: -
 

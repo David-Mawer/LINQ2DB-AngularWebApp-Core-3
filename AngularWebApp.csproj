@@ -10,15 +10,16 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <UserSecretsId>6b18b10d-0caf-41b6-879b-a3d4d97f0555</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="linq2db" Version="3.0.0-preview.2" />
-    <PackageReference Include="linq2db.SqlServer" Version="3.0.0-preview.2" />
-    <PackageReference Include="linq2db.t4models" Version="3.0.0-preview.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
+    <PackageReference Include="linq2db" Version="3.0.0" />
+    <PackageReference Include="linq2db.SqlServer" Version="3.0.0" />
+    <PackageReference Include="linq2db.t4models" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 
