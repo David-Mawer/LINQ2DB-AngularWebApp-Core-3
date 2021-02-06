@@ -1,6 +1,6 @@
-# This is a .Net Core 3.1 (Angular 10 + API) Template for Linq2Db
+# This is a .Net 5.0 (Angular 11 + API) Template for Linq2Db
 
-This is the basic Angular WebApp template for **.Net Core 3.1** with a few tweaks: -
+This is the basic Angular WebApp template for **.Net (Core) 5.0** with a few tweaks: -
 
  - The ORM tool is **Linq2DB**
  - **Identity tables don't have the default names** - these can be changed.
