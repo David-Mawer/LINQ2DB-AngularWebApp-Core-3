@@ -63,5 +63,16 @@ namespace AngularWebApp.Auth
                 Type = grant.Type
             });
         }
+
+        Task<IEnumerable<PersistedGrant>> IPersistedGrantStore.GetAllAsync(PersistedGrantFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IPersistedGrantStore.RemoveAllAsync(PersistedGrantFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
