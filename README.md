@@ -1,3 +1,5 @@
+# Template refers to public libraries that are no longer open source. This template is no longer current - do not use it.
+
 # This is a .Net 5.0 (Angular 11 + API) Template for Linq2Db
 
 This is the basic Angular WebApp template for **.Net (Core) 5.0** with a few tweaks: -
